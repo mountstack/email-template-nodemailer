@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Order Confirmation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body,
+        p,
+        span,
+        a,
+        li {
+            font-family: "Manrope", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Kanit", sans-serif;
+            margin: 0;
+        }
+        .footer-logo{
+            width: 32px;
+            height: 32px;
+            border: 1px solid #5D5C65;
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+ .footer-logo:hover{
+    background-color: #583CEA;
+    border: 1px solid transparent;
+ }
+
+     
+    </style>
+</head>
+
+<body style="margin: 0 auto; padding: 0; background-color: #F7F6FE; max-width: 600px; " >
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="position: relative;">
+        <tr>
+            <td align="center" valign="top">
+                <table  cellpadding="0" cellspacing="0" border="0">
+                      <!-- Header with logo -->
+                      <tr>
+                        <td align="center" style="padding-top:30px">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center"valign="top" >
+                                        <img src="cid:logo" alt="Logo" width="109.57" height="28">
+                                    </td>
+                                 
+                                    
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Main Content -->
+                    <tr >
+                        <td>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center"  style="padding:0px 60px 40px 60px">
+                                <!-- Title Section -->
+                                <tr>
+                                    <td align="center" style="padding-bottom: 32px; padding-top: 40px;">
+                                        <h3
+                                            style="font-size: 24px; font-weight: 700; color: #0D0B19; margin-bottom: 4px;">
+                                            Order Confirmation
+                                        </h3>
+                                        <p style="font-size: 16px; font-weight: 500; color: #5D5C65;">
+                                            Thank you <span style="font-weight: 700;">
+                                                <%= order.customer_first_name ? order.customer_first_name + "!" : "" %>
+                                            </span>
+                                            Your order #<%= order.order_id %> has been received.
+                                        </p> 
+                                    </td>
+                                </tr>
+
+                                <!-- Customer Details -->
+                                <tr>
+                                    <td style="padding-bottom: 24px;">
+                                        <p
+                                            style="font-size: 14px; font-weight: 700; color: #5D5C65; margin-bottom: 4px;">
+                                            Customer Details
+                                        </p>
+                                        <table width="100%" cellpadding="12" cellspacing="0" border="0"
+                                            style="background-color: #fff; border-radius: 8px;">
+                                            <tr>
+                                                <td>
+                                                    <p style="font-size: 16px; font-weight: 700; color: #0D0B19;">
+                                                        <%= order.customer_first_name + " " + order.customer_last_name %>
+                                                    </p>
+                                                    <span style="font-size: 16px; font-weight: 500; color: #5D5C65;">
+                                                        <%= order.customer_email %>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table> 
+                                    </td>
+                                </tr>
+
+                                <!-- Selected Service -->
+                                <tr>
+                                    <td style="padding-bottom: 24px" align="left ">
+                                        <p style="font-size: 14px; font-weight: 600; color: #5D5C65;">
+                                            Selected Service
+                                        </p>
+                                        <table cellpadding="8" width="100%" align="right" style="border-spacing: 0 12px;">
+                                            <% order.services.forEach(service => { %> 
+                                                <% if(service.selectedComplexityType) { %> 
+                                                    <tr style="background-color: #fff;">
+                                                        <td colspan="3" style="padding: 0; background-color: #fff; border-radius: 8px;">
+                                                            <table width="100%" cellpadding="8" style="border-radius: 8px;">
+                                                                <tr>
+                                                                    <td style="width: 56px; height: 56px; padding-bottom: 0px;">
+                                                                        <% if(service.selectedComplexityType.images.length) { %>
+                                                                            <img 
+                                                                                src="<%= service.selectedComplexityType.images[0] %>" 
+                                                                                alt="service image" 
+                                                                                style="width: 56px; height: 56px;" 
+                                                                            />
+                                                                        <% } else { %>
+                                                                            <img 
+                                                                                src="cid:unknown" 
+                                                                                style="width: 56px; height: 56px; border: 1px solid #EAE8EC; border-radius: 8px;" 
+                                                                                alt="service image" 
+                                                                            />
+                                                                        <% } %>
+                                                                    </td>
+                                                                    <td style="padding-left: 12px; box-sizing: border-box; width:60%;">
+                                                                        <p style="font-size: 16px; font-weight: 700; color: #0D0B19; margin: 0;">
+                                                                            <%= service.serviceName %>
+                                                                        </p>
+                                                                        <span style="font-size: 14px; font-weight: 600; color: #5D5C65;">
+                                                                            <%= service.selectedComplexityType?.label %>
+                                                                        </span>
+                                                                    </td>
+                                                                    <td style="line-height: 20px; text-align: right;" align="right">
+                                                                        <% if(service.selectedComplexityType?.price) { %>
+                                                                            <p style="font-size: 18px; font-weight: 700; color: #583CEA; margin: 0;">
+                                                                                $<%= service.selectedComplexityType?.price %> USD
+                                                                            </p>
+                                                                        <% } else { %>
+                                                                            <p style="font-size: 18px; font-weight: 700; color: #583CEA; margin: 0;line-height: 20px;">
+                                                                                $0 USD
+                                                                            </p>
+                                                                        <% } %>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                <% } else { %> 
+                                                    <% service?.selectedSubServices?.forEach(subservice => { %> 
+                                                        <tr style="background-color: #fff;">
+                                                            <td colspan="3" style="padding: 0; background-color: #fff; border-radius: 8px;">
+                                                                <table width="100%" cellpadding="8" style="border-radius: 8px;">
+                                                                    <tr>
+                                                                        <td style="width: 56px; height: 56px;">
+                                                                            <% if(subservice.selectedComplexityType.images.length) { %>
+                                                                                <img 
+                                                                                    src="<%= subservice.selectedComplexityType.images[0] %>" 
+                                                                                    style="width: 56px; height: 56px;"
+                                                                                    alt="service image"
+                                                                                />
+                                                                            <% } else { %>
+                                                                                <img 
+                                                                                    src="cid:unknown" 
+                                                                                    style="width: 56px; height: 56px; border: 1px solid #EAE8EC; border-radius: 8px;" 
+                                                                                    alt="service image" 
+                                                                                />
+                                                                            <% } %>
+                                                                        </td>
+                                                                        <td style="padding-left: 12px; box-sizing: border-box;width: 60%;">
+                                                                            <p style="font-size: 16px; font-weight: 700; color: #0D0B19;">
+                                                                                <%= service.serviceName %> - <%= subservice.subServiceName %> 
+                                                                            </p>
+                                                                            <span style="font-size: 14px; font-weight: 600; color: #5D5C65;">
+                                                                                <%= subservice.selectedComplexityType?.label %> 
+                                                                            </span>
+                                                                        </td>
+                                                                        <td style="line-height: 20px; text-align: right;" align="right">
+                                                                            <% if(subservice.selectedComplexityType?.price) { %>
+                                                                                <p style="font-size: 18px; font-weight: 700; color: #583CEA;">
+                                                                                    $<%= subservice.selectedComplexityType?.price %> USD 
+                                                                                </p>
+                                                                            <% } else { %>
+                                                                                <p style="font-size: 18px; font-weight: 700; color: #583CEA;">
+                                                                                    $0 USD 
+                                                                                </p> 
+                                                                            <% } %>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    <% }) %> 
+                                                <% } %> 
+                                            <% }) %>
+                                        </table>
+                                        
+                                        
+                                    </td>
+                                </tr>
+
+                                <!-- Number of Edits & Attachments -->
+                                <tr>
+                                    <td style="padding-bottom: 16px;">
+                                        <p
+                                            style="font-size: 14px; font-weight: 700; color: #5D5C65; margin-bottom: 4px;">
+                                            Number of Edits & Attachments
+                                        </p>
+                                        <p
+                                            style="font-size: 16px; font-weight: 700; color: #0D0B19; margin-bottom: 4px;">
+                                            <%= order.quantity %> images, <%= order.files.length %> resources added 
+                                        </p> 
+                                        
+                                        <table width="100%" cellpadding="12" cellspacing="0" border="0"
+                                            style="background-color: #fff; border-radius: 8px;">
+                                            <tr>
+                                                <td>
+                                                    <% order.files.forEach((file, i) => { %> 
+                                                        <p  style="font-size: 14px; font-weight: 400; color: #5D5C65; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                            Link <%= i+1 %>: 
+                                                            <span style="text-decoration: underline;">
+                                                                <%= file %> 
+                                                            </span>
+                                                        </p> 
+                                                    <% })  %> 
+                                                    <% if(!isAdmin) { %> 
+                                                        <p style="font-size: 14px; font-weight: 600; color: #5D5C65; margin-top: 8px;">
+                                                            NB: Please don't change the shared folder content
+                                                        </p>
+                                                    <% } %> 
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- File Format -->
+                                <tr>
+                                    <td style="padding-bottom: 16px;">
+                                        <p
+                                            style="font-size: 14px; font-weight: 700; color: #5D5C65; margin-bottom: 4px;">
+                                            File Format
+                                        </p>
+                                        <% order.preferences.file_format.forEach((format) => { %> 
+                                            <p style="font-size: 16px; font-weight: 700; color: #0D0B19;">
+                                                <%= format.label %>, <%= format.option %>
+                                            </p>
+                                        <% }) %> 
+                                    </td>
+                                </tr>
+
+                                <!-- Add-on Services -->
+                                <% if(!order.isFree) { %> 
+                                    <tr>
+                                        <td style="padding-bottom: 16px;">
+                                            <p
+                                                style="font-size: 14px; font-weight: 700; color: #5D5C65; margin-bottom: 4px;">
+                                                Add-on Services
+                                            </p>
+                                            <p style="font-size: 16px; font-weight: 700; color: #0D0B19;"> 
+                                                <% if(order.preferences.add_ons.isStraightenCrop) { %> 
+                                                    Straighten crop and set margin
+                                                <% } %> 
+                                                <% if(order.preferences.add_ons.isStraightenCrop && order.preferences.add_ons.widthHeight) { %> 
+                                                    ,
+                                                <% } %> 
+                                                <% if(order.preferences.add_ons.widthHeight) { %> 
+                                                    <%= order.preferences.add_ons.widthHeight %>
+                                                <% } %> 
+                                            </p>
+                                        </td>
+                                    </tr>
+                                <% } %>
+
+                                <!-- Instructions -->
+                                <tr>
+                                    <td style="padding-bottom: 24px;">
+                                        <p
+                                            style="font-size: 14px; font-weight: 700; color: #5D5C65; margin-bottom: 4px;"> 
+                                            Instructions
+                                        </p> 
+                                        <p style="font-size: 16px; font-weight: 500; color: #5D5C65;"> 
+                                            <%= order.preferences.note %> 
+                                        </p> 
+                                    </td> 
+                                </tr> 
+
+                                <!-- Calculation -->
+                                <% if(!order.isFree) { %>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                                                style="border-top: 1px solid #E2DFFB;">
+                                                <tr>
+                                                    <td style="padding: 16px 0;">
+                                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                            <tr>
+                                                                <td style="padding-bottom: 8px;">
+                                                                    <table width="100%" cellpadding="0" cellspacing="0"
+                                                                        border="0">
+                                                                        <tr>
+                                                                            <td
+                                                                                style="font-size: 16px; font-weight: 500; color: #5D5C65;">
+                                                                                <%= order.quantity %> x Background removal service 
+                                                                            </td>
+                                                                            <td align="right"
+                                                                                style="font-size: 16px; font-weight: 700; color: #0D0B19;">
+                                                                                $<%= order.price * order.quantity %> USD
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding-bottom: 8px;">
+                                                                    <table width="100%" cellpadding="0" cellspacing="0"
+                                                                        border="0">
+                                                                        <tr>
+                                                                            <td
+                                                                                style="font-size: 16px; font-weight: 500; color: #5D5C65;">
+                                                                                <%= order.quantity %> x <%= order.prefTimePrice.priceStr %>
+                                                                            </td>
+                                                                            <td align="right"
+                                                                                style="font-size: 16px; font-weight: 700; color: #0D0B19;">
+                                                                                <%= order.prefTimePrice.price %>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table width="100%" cellpadding="0" cellspacing="0"
+                                                                        border="0">
+                                                                        <tr>
+                                                                            <td
+                                                                                style="font-size: 16px; font-weight: 500; color: #5D5C65;">
+                                                                                <%= order.quantity %> x <%= order.preferences.file_format.length - 1 %> additional copy
+                                                                            </td>
+                                                                            <td align="right"
+                                                                                style="font-size: 16px; font-weight: 700; color: #0D0B19;">
+                                                                                $<%= order.additionalCopyPrice * order.quantity %> USD
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-top: 8px; border-top: 1px solid #E2DFFB;">
+                                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                            <tr>
+                                                                <td style="font-size: 16px; font-weight: 700; color: #0D0B19;">
+                                                                    Total
+                                                                </td>
+                                                                <td align="right"
+                                                                    style="font-size: 24px; font-weight: 700; color: #583CEA; font-family: 'Kanit', sans-serif;">
+                                                                    <% if(!order.total_price) { %>
+                                                                        $0 USD
+                                                                    <% } else if(order.total_price >= 0) { %>
+                                                                        $<%= order.total_price.toFixed(2) %> USD
+                                                                    <% } else { %>
+                                                                        -$<%= (order.total_price * -1).toFixed(2) %> USD
+                                                                    <% } %>
+                                                                </td>
+                                                            </tr>
+                                                        </table> 
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #000000; padding: 24px 16px; margin-top: 60px;">
+                            <table width="100%" cellpadding="0" cellspacing="8px" border="0">
+                                <tr>
+                                    <td align="center" style="padding-bottom: 20px;">
+                                        <h2 style="font-size: 16px; font-weight: 400; line-height: 1.5; color: #EAE8EC;">
+                                            Discover the essence of timeless fashion and<br>make a statement with our collection.
+                                        </h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding-bottom: 24px;">
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="padding: 0 12px;"><a href="https://bizphix.com/about"
+                                                        style="color: #EAE8EC; text-decoration: none; font-size: 14px;">About Us</a></td>
+                                                <td style="padding: 0 12px;"><a href="https://bizphix.com/privacy"
+                                                        style="color: #EAE8EC; text-decoration: none; font-size: 14px;">Privacy</a>
+                                                </td>
+                                                <td style="padding: 0 12px;"><a href="/https://bizphix.com/career"
+                                                        style="color: #EAE8EC; text-decoration: none; font-size: 14px;">Career</a>
+                                                </td>
+                                                <td style="padding: 0 12px;"><a href="https://bizphix.com/policy"
+                                                        style="color: #EAE8EC; text-decoration: none; font-size: 14px;">Policy</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top: 1px solid #251962; padding-top: 12px;">
+                                            <tr>
+                                                <td style="font-size: 14px; color: #EAE8EC;">© 2024 Bizphix. All rights reserved.</td>
+                                                <td align="right">
+                                                    <table cellpadding="0" cellspacing="0" border="0">
+                                                        <tr>
+                                                            <td style="padding-left: 8px;">
+                                                                <a href="facebook.com">
+                                                                    <div class="footer-logo">
+                                                                        <img src="cid:fb" alt="Facebook" style="width: 16px; height: 16px;margin: auto;object-fit: contain;">
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                            <td style="padding-left: 8px;">
+                                                                <a href="twitter.com">
+                                                                    <div class="footer-logo">
+                                                                        <img src="cid:twitter" alt="Twitter" style="width: 16px; height: 16px;margin: auto;object-fit: contain;">
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                            <td style="padding-left: 8px;">
+                                                                <a href="instagram.com">
+                                                                    <div class="footer-logo border-radius: 4px;">
+                                                                        <img src="cid:instagram" alt="Instagram" style="width: 16px; height: 16px;margin: auto;object-fit: contain;">
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                            <td style="padding-left: 8px;">
+                                                                <a href="linkedin.com">
+                                                                    <div class="footer-logo">
+                                                                        <img  src="cid:linkedin" alt="LinkedIn" style="width: 16px; height: 16px; margin: auto;object-fit: contain;">
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
